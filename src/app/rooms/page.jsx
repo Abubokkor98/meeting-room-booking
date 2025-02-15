@@ -1,4 +1,4 @@
-import RoomCard from "../components/RoomCard";
+import RoomCard from "../components/RoomCard/RoomCard";
 
 const fakeRooms = [
     {

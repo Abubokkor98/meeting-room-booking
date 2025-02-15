@@ -1,7 +1,7 @@
 import React from 'react'
 
-export default function DynamicRoom() {
+export default function DynamicRoom({params}) {
   return (
-    <div>DynamicRoom</div>
+    <div>room {params.name} </div>
   )
 }
