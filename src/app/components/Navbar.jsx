@@ -15,6 +15,7 @@ export default function Navbar() {
           Meeting Room Booking
         </Link>
         <div className="space-x-4">
+          <Link href="/rooms">All Rooms</Link>
           <Link href="/dashboard">Dashboard</Link>
         </div>
         <div className="space-x-4">
