@@ -9,8 +9,8 @@ export const fetchRooms = async () => {
 };
 
 // Fetch room details by ID
-export const fetchRoomById = async (roomId) => {
-  const { data } = await axios.get(`${API_BASE_URL}/rooms/${roomId}`);
+export const fetchRoomById = async (id) => {
+  const { data } = await axios.get(`${API_BASE_URL}/rooms/${id}`);
   return data;
 };
 
