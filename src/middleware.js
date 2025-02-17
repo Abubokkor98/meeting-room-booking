@@ -8,24 +8,21 @@ export async function middleware(req) {
   const adminEmail = "mail.abubokkor@gmail.com";
   const isAdmin = user?.email === adminEmail;
 
-  const url = req.nextUrl.clone();
+  const url = new URL(req.url); // Use new URL() for better reliability
 
-  // If user is not logged in, send to login
-  if (!user) {
-    url.pathname = "/api/auth/login";
-    return NextResponse.redirect(url);
+  // Prevent infinite login redirect loop
+  if (!user && url.pathname !== "/api/auth/login") {
+    return NextResponse.redirect(new URL("/api/auth/login", req.url));
   }
 
-  // Admin protection
+  // Redirect non-admin users away from dashboard
   if (url.pathname.startsWith("/dashboard") && !isAdmin) {
-    url.pathname = "/rooms";
-    return NextResponse.redirect(url);
+    return NextResponse.redirect(new URL("/rooms", req.url));
   }
 
-  // Normal user protection
+  // Redirect admins away from user-only pages
   if (url.pathname.startsWith("/rooms") && isAdmin) {
-    url.pathname = "/dashboard";
-    return NextResponse.redirect(url);
+    return NextResponse.redirect(new URL("/dashboard", req.url));
   }
 
   return NextResponse.next();
@@ -33,5 +30,5 @@ export async function middleware(req) {
 
 // Apply middleware to specific paths
 export const config = {
-  matcher: ["/dashboard/:path*", "/admin-dashboard/:path*"],
+  matcher: ["/rooms", "/dashboard/:path*"],
 };
