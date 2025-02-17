@@ -33,13 +33,19 @@ export const fetchAllBookings = async () => {
 };
 
 // Admin: Fetch all rooms
-export const fetchAdminRooms = async () => {
-  const { data } = await axios.get(`${API_BASE_URL}/admin/rooms`);
-  return data;
-};
+// export const fetchAdminRooms = async () => {
+//   const { data } = await axios.get(`${API_BASE_URL}/admin/rooms`);
+//   return data;
+// };
 
 // Admin: Delete a room
 export const deleteRoom = async (roomId) => {
   const { data } = await axios.delete(`${API_BASE_URL}/admin/rooms/${roomId}`);
+  return data;
+};
+
+// Admin: Update a room
+export const updateRoom = async (roomId, updatedRoom) => {
+  const { data } = await axios.put(`${API_BASE_URL}/admin/rooms/${roomId}`, updatedRoom);
   return data;
 };
