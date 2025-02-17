@@ -17,14 +17,14 @@ export async function middleware(req) {
   }
 
   // Admin protection
-  if (url.pathname.startsWith("/admin-dashboard") && !isAdmin) {
-    url.pathname = "/dashboard";
+  if (url.pathname.startsWith("/dashboard") && !isAdmin) {
+    url.pathname = "/rooms";
     return NextResponse.redirect(url);
   }
 
   // Normal user protection
-  if (url.pathname.startsWith("/dashboard") && isAdmin) {
-    url.pathname = "/admin-dashboard";
+  if (url.pathname.startsWith("/rooms") && isAdmin) {
+    url.pathname = "/dashboard";
     return NextResponse.redirect(url);
   }
 
@@ -33,5 +33,5 @@ export async function middleware(req) {
 
 // Apply middleware to specific paths
 export const config = {
-  matcher: ["/dashboard/:path*", "/admin-dashboard/:path*"], // Protect these routes
+  matcher: ["/dashboard/:path*", "/admin-dashboard/:path*"],
 };
