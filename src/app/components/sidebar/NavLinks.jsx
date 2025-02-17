@@ -12,6 +12,7 @@ const adminLinks = [
 
 const userLinks = [
   { name: "Home", href: "/", icon: Home },
+  { name: "Book Rooms", href: "/rooms", icon: BedDouble },
   { name: "My Bookings", href: "/my-bookings", icon: BookOpen },
   { name: "Profile", href: "/profile", icon: User },
 ];

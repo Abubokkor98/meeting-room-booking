@@ -1,11 +1,16 @@
+import BookRoomButton from "@/app/components/BookRoomButton/BookRoomButton";
 import { fetchRoomById } from "@/app/lib/api";
-import React from "react";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
 export default async function DynamicRoom({ params }) {
   const { id } = params;
   const room = await fetchRoomById(id);
+
+  const { getUser } = getKindeServerSession();
+  const user = await getUser(); // Fetch user on the server
+
   return (
-    <div className="container mx-auto p-4">
+    <div className="flex flex-col justify-center p-4">
       <img
         src={room.image}
         alt={room.name}
@@ -32,10 +37,8 @@ export default async function DynamicRoom({ params }) {
 
       <p className="text-gray-500 my-4">{room.description}</p>
 
-      {/* Book Room Button */}
-      <button className="mt-4 bg-teal-600 text-white px-6 py-3 rounded-lg hover:bg-teal-700 transition duration-300">
-        Book Room
-      </button>
+      {/* Book btn */}
+      <BookRoomButton room={room} user={user} />
     </div>
   );
 }
