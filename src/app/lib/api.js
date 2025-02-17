@@ -38,6 +38,17 @@ export const fetchAllBookings = async () => {
 //   return data;
 // };
 
+// Admin: Add a new room
+export const addRoom = async (newRoom) => {
+  try {
+    const { data } = await axios.post(`${API_BASE_URL}/admin/rooms`, newRoom);
+    return data;
+  } catch (error) {
+    console.error("Error adding room:", error);
+    throw error;
+  }
+};
+
 // Admin: Delete a room
 export const deleteRoom = async (roomId) => {
   const { data } = await axios.delete(`${API_BASE_URL}/admin/rooms/${roomId}`);
