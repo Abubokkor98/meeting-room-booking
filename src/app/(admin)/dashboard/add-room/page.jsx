@@ -9,7 +9,6 @@ export default function AddRoomForm() {
   const {
     register,
     handleSubmit,
-    setValue,
     formState: { errors },
   } = useForm();
   const [isLoading, setIsLoading] = useState(false);

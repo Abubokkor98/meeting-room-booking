@@ -1,54 +1,50 @@
-import { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { useForm } from "react-hook-form"; 
 import { useRouter } from "next/navigation";
 import { updateRoom } from "@/app/lib/api";
+import toast from "react-hot-toast";
 
 const UpdateRoomModal = ({ room, onClose }) => {
-  const { _id, name, capacity, location, pricePerHour, description, availability, amenities } = room;
-  const { startTime, endTime } = availability;
+  const {
+    _id,
+    name,
+    photo,
+    capacity,
+    location,
+    pricePerHour,
+    description,
+    availability,
+    amenities,
+  } = room;
 
-  const { register, handleSubmit, setValue, formState: { errors } } = useForm();
-  const [selectedAmenities, setSelectedAmenities] = useState(amenities || []);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const router = useRouter();
 
-  // Prefill form with room data
-  useEffect(() => {
-    setValue("name", name);
-    setValue("capacity", capacity);
-    setValue("location", location);
-    setValue("pricePerHour", pricePerHour);
-    setValue("description", description);
-    setValue("startTime", startTime);
-    setValue("endTime", endTime);
-
-    // Set amenities checkboxes
-    setSelectedAmenities(amenities);
-  }, [room, setValue, amenities]);
-
-  // Handle amenities checkbox change
-  const handleAmenityChange = (e) => {
-    const { value, checked } = e.target;
-    if (checked) {
-      setSelectedAmenities((prev) => [...prev, value]);
-    } else {
-      setSelectedAmenities((prev) => prev.filter((item) => item !== value));
-    }
-  };
-
-  // Handle form submission
   const onSubmit = async (data) => {
+    const updatedFields = {
+      name: data.name || name,
+      photo: data.photo || photo,
+      capacity: data.capacity || capacity,
+      location: data.location || location,
+      pricePerHour: data.pricePerHour || pricePerHour,
+      description: data.description || description,
+      availability: {
+        startTime: data.startTime || availability.startTime,
+        endTime: data.endTime || availability.endTime,
+      },
+      amenities: data.amenities || amenities,
+    };
+
     try {
-      const updatedRoomData = {
-        ...data,
-        amenities: selectedAmenities,
-        availability: {
-          startTime: data.startTime,
-          endTime: data.endTime
-        }
-      };
-      await updateRoom(_id, updatedRoomData);
-      onClose();
-      router.push("/dashboard");
+      const res = await updateRoom(_id, updatedFields);
+      if (res.modifiedCount > 0) {
+        onClose();
+        toast.success("Update successfully");
+        router.push("/dashboard");
+      }
     } catch (error) {
       console.error("Error updating room:", error);
     }
@@ -56,7 +52,7 @@ const UpdateRoomModal = ({ room, onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center">
-      <div className="bg-white p-6 rounded-lg w-full sm:w-96">
+      <div className="bg-white p-6 rounded-lg w-full sm:max-w-lg max-h-[90vh] overflow-y-auto">
         <h2 className="text-xl font-semibold text-teal-600 mb-4">Update Room</h2>
 
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -66,10 +62,20 @@ const UpdateRoomModal = ({ room, onClose }) => {
             <input
               type="text"
               className="w-full p-2 border rounded-md"
-              placeholder="Enter room name"
-              {...register("name", { required: "Room name is required" })}
+              defaultValue={name}
+              {...register("name")}
             />
-            {errors.name && <p className="text-red-500">{errors.name.message}</p>}
+          </div>
+
+          {/* Image URL */}
+          <div className="mb-4">
+            <label className="block text-gray-600">Image URL</label>
+            <input
+              type="text"
+              className="w-full p-2 border rounded-md"
+              defaultValue={photo}
+              {...register("photo")}
+            />
           </div>
 
           {/* Capacity */}
@@ -78,10 +84,9 @@ const UpdateRoomModal = ({ room, onClose }) => {
             <input
               type="number"
               className="w-full p-2 border rounded-md"
-              placeholder="Enter room capacity"
-              {...register("capacity", { required: "Capacity is required" })}
+              defaultValue={capacity}
+              {...register("capacity")}
             />
-            {errors.capacity && <p className="text-red-500">{errors.capacity.message}</p>}
           </div>
 
           {/* Location */}
@@ -90,10 +95,9 @@ const UpdateRoomModal = ({ room, onClose }) => {
             <input
               type="text"
               className="w-full p-2 border rounded-md"
-              placeholder="Enter room location"
-              {...register("location", { required: "Location is required" })}
+              defaultValue={location}
+              {...register("location")}
             />
-            {errors.location && <p className="text-red-500">{errors.location.message}</p>}
           </div>
 
           {/* Price Per Hour */}
@@ -102,10 +106,9 @@ const UpdateRoomModal = ({ room, onClose }) => {
             <input
               type="number"
               className="w-full p-2 border rounded-md"
-              placeholder="Enter price per hour"
-              {...register("pricePerHour", { required: "Price is required" })}
+              defaultValue={pricePerHour}
+              {...register("pricePerHour")}
             />
-            {errors.pricePerHour && <p className="text-red-500">{errors.pricePerHour.message}</p>}
           </div>
 
           {/* Description */}
@@ -113,10 +116,9 @@ const UpdateRoomModal = ({ room, onClose }) => {
             <label className="block text-gray-600">Description</label>
             <textarea
               className="w-full p-2 border rounded-md"
-              placeholder="Enter room description"
-              {...register("description", { required: "Description is required" })}
+              defaultValue={description}
+              {...register("description")}
             />
-            {errors.description && <p className="text-red-500">{errors.description.message}</p>}
           </div>
 
           {/* Availability */}
@@ -126,7 +128,8 @@ const UpdateRoomModal = ({ room, onClose }) => {
               <input
                 type="time"
                 className="w-full p-2 border rounded-md"
-                {...register("startTime", { required: "Start time is required" })}
+                defaultValue={availability.startTime}
+                {...register("startTime")}
               />
             </div>
 
@@ -135,7 +138,8 @@ const UpdateRoomModal = ({ room, onClose }) => {
               <input
                 type="time"
                 className="w-full p-2 border rounded-md"
-                {...register("endTime", { required: "End time is required" })}
+                defaultValue={availability.endTime}
+                {...register("endTime")}
               />
             </div>
           </div>
@@ -144,36 +148,18 @@ const UpdateRoomModal = ({ room, onClose }) => {
           <div className="mb-4">
             <label className="block text-gray-600">Amenities</label>
             <div className="flex gap-4">
-              <label className="flex items-center">
-                <input
-                  type="checkbox"
-                  value="Wi-Fi"
-                  checked={selectedAmenities.includes("Wi-Fi")}
-                  onChange={handleAmenityChange}
-                  className="mr-2"
-                />
-                Wi-Fi
-              </label>
-              <label className="flex items-center">
-                <input
-                  type="checkbox"
-                  value="Projector"
-                  checked={selectedAmenities.includes("Projector")}
-                  onChange={handleAmenityChange}
-                  className="mr-2"
-                />
-                Projector
-              </label>
-              <label className="flex items-center">
-                <input
-                  type="checkbox"
-                  value="Whiteboard"
-                  checked={selectedAmenities.includes("Whiteboard")}
-                  onChange={handleAmenityChange}
-                  className="mr-2"
-                />
-                Whiteboard
-              </label>
+              {amenities.map((amenity) => (
+                <label key={amenity} className="flex items-center">
+                  <input
+                    type="checkbox"
+                    value={amenity}
+                    defaultChecked={amenities.includes(amenity)}
+                    {...register("amenities")}
+                    className="mr-2"
+                  />
+                  {amenity}
+                </label>
+              ))}
             </div>
           </div>
 
@@ -182,7 +168,7 @@ const UpdateRoomModal = ({ room, onClose }) => {
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600"
+              className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
             >
               Cancel
             </button>
