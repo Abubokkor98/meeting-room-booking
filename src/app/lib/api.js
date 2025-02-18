@@ -1,6 +1,10 @@
 import axios from "axios";
 
+
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
+
+
 
 // Fetch all rooms
 export const fetchRooms = async () => {
@@ -28,11 +32,27 @@ export const createBooking = async (bookingData) => {
   return data;
 };
 
+// User: Delete own booking
+export const deleteUserBooking = async (bookingId, email) => {
+  const { data } = await axios.delete(`${API_BASE_URL}/bookings/${bookingId}`, {
+    params: { email },
+  });
+  return data;
+};
+
 // Admin: Fetch all bookings
 export const fetchAllBookings = async () => {
   const { data } = await axios.get(`${API_BASE_URL}/admin/bookings`);
   return data;
 };
+
+// Admin: Delete any booking
+export const deleteBookingAdmin = async (bookingId) => {
+  const { data } = await axios.delete(`${API_BASE_URL}/admin/bookings/${bookingId}`);
+  return data;
+};
+
+
 
 // Admin: Fetch all rooms
 // export const fetchAdminRooms = async () => {
@@ -67,7 +87,6 @@ export const updateRoom = async (roomId, updatedRoom) => {
 };
 
 // Upload image to ImgBB
-
 export const image_hosting_key = process.env.NEXT_PUBLIC_VITE_IMAGE_HOSTING_KEY;
 export const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 

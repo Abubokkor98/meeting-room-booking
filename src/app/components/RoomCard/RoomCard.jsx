@@ -5,7 +5,7 @@ export default function RoomCard({ room }) {
   return (
     <div className="bg-white shadow-lg rounded-2xl p-4 w-full sm:w-80">
       <img
-        src={room.image}
+        src={room.photo}
         alt={room.name}
         className="rounded-xl w-full h-40 object-cover mb-4"
       />

@@ -2,34 +2,48 @@
 
 import { useState } from "react";
 import { createBooking } from "@/app/lib/api";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
+
 
 const BookRoomButton = ({ room, user }) => {
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
+  const router = useRouter();
+
+  // Total price calculating
+  const calcTotalPrice = (room) => {
+    const [startHour, startMinute] = room.availability.startTime.split(":").map(Number);
+    const [endHour, endMinute] = room.availability.endTime.split(":").map(Number);
+  
+    const durationInHours = (endHour * 60 + endMinute - (startHour* 60 + startMinute)) / 60;
+  
+    return (durationInHours * room.pricePerHour).toFixed(2);
+  };
+  
 
   const handleBooking = async () => {
     setLoading(true);
-    setMessage("");
 
     try {
-
       const bookingData = {
         userEmail: user.email,
         roomId: room.id,
         roomName: room.name,
-        date: new Date().toISOString().split("T")[0], // Current date
+        facility: room.amenities,
+        date: new Date().toISOString().split("T")[0],
         startTime: room.availability.startTime,
         endTime: room.availability.endTime,
-        totalPrice: room.pricePerHour,
-        status: "Pending",
+        totalPrice: calcTotalPrice(room),
       };
 
-      await createBooking(bookingData);
-      setMessage("Booking successful!");
+      const res = await createBooking(bookingData);
+      if (res.insertedId) {
+        toast.success("Booking successful!");
+        router.push("/my-bookings");
+      }
     } catch (error) {
-      setMessage("Failed to book room. Please try again.");
+      toast.error("Failed to book room. Please try again.");
     }
-
     setLoading(false);
   };
 
@@ -42,8 +56,6 @@ const BookRoomButton = ({ room, user }) => {
       >
         {loading ? "Booking..." : "Book Room"}
       </button>
-
-      {message && <p className="mt-2 text-red-600">{message}</p>}
     </div>
   );
 };

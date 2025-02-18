@@ -7,12 +7,12 @@ export default async function DynamicRoom({ params }) {
   const room = await fetchRoomById(id);
 
   const { getUser } = getKindeServerSession();
-  const user = await getUser(); // Fetch user on the server
+  const user = await getUser();
 
   return (
     <div className="flex flex-col justify-center p-4">
       <img
-        src={room.image}
+        src={room.photo}
         alt={room.name}
         className="rounded-xl w-full h-64 object-cover mb-4"
       />
