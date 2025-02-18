@@ -13,7 +13,6 @@ export default function AdminRoomCard({ room }) {
       try {
         await deleteRoom(room._id);
         alert("Room deleted successfully!");
-        // Optional: Refresh or update the room list after deletion
       } catch (error) {
         alert("Failed to delete the room.");
         console.error(error);
@@ -24,7 +23,7 @@ export default function AdminRoomCard({ room }) {
   return (
     <div className="bg-white shadow-lg rounded-2xl p-4 w-full sm:w-80">
       <img
-        src={room.image}
+        src={room.photo}
         alt={room.name}
         className="rounded-xl w-full h-40 object-cover mb-4"
       />

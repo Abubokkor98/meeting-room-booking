@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -16,7 +16,9 @@ export const fetchRoomById = async (id) => {
 
 // Fetch user-specific bookings
 export const fetchUserBookings = async (email) => {
-  const { data } = await axios.get(`${API_BASE_URL}/dashboard`, { params: { email } });
+  const { data } = await axios.get(`${API_BASE_URL}/dashboard`, {
+    params: { email },
+  });
   return data;
 };
 
@@ -57,6 +59,24 @@ export const deleteRoom = async (roomId) => {
 
 // Admin: Update a room
 export const updateRoom = async (roomId, updatedRoom) => {
-  const { data } = await axios.put(`${API_BASE_URL}/admin/rooms/${roomId}`, updatedRoom);
+  const { data } = await axios.put(
+    `${API_BASE_URL}/admin/rooms/${roomId}`,
+    updatedRoom
+  );
+  return data;
+};
+
+// Upload image to ImgBB
+
+export const image_hosting_key = process.env.NEXT_PUBLIC_VITE_IMAGE_HOSTING_KEY;
+export const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
+
+export const uploadImage = async (image) => {
+  const { data } = await axios.post(image_hosting_api, image, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+
   return data;
 };
