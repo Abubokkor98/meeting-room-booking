@@ -1,4 +1,4 @@
-import RoomCard from "../../components/RoomCard/RoomCard";
+import RoomCard from "../../_components/RoomCard/RoomCard";
 import { fetchAllRooms } from "../../lib/api";
 
   

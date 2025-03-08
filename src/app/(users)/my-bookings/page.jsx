@@ -1,4 +1,4 @@
-import BookingsList from "@/app/components/BookingsList/BookingsList";
+import BookingsList from "@/app/_components/BookingsList/BookingsList";
 import { fetchUserBookings } from "@/app/lib/api";
 import { currentUser } from "@clerk/nextjs/server";
 

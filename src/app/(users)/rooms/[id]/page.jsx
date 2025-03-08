@@ -1,4 +1,4 @@
-import BookRoomButton from "@/app/components/BookRoomButton/BookRoomButton";
+import BookRoomButton from "@/app/_components/BookRoomButton/BookRoomButton";
 import { fetchRoomById } from "@/app/lib/api";
 import { currentUser } from "@clerk/nextjs/server";
 
