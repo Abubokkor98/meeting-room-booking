@@ -1,17 +1,15 @@
 "use client";
 
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { fetchUserBookings } from "@/app/lib/api";
 import BookingCard from "@/app/components/bookingCard/BookingCard";
 
 export default function BookingsList({ bookings, email }) {
-  const queryClient = useQueryClient();
-
-  // Fetch bookings with react-query
+  // Fetch user bookings with React Query
   const { data: myBookings = [] } = useQuery({
     queryKey: ["bookings", email],
     queryFn: () => fetchUserBookings(email),
-    initialData: bookings, // Use server-fetched data as initial state
+    initialData: bookings, 
   });
 
   return (
