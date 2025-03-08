@@ -1,9 +1,9 @@
 import RoomCard from "../../components/RoomCard/RoomCard";
-import { fetchRooms } from "../../lib/api";
+import { fetchAllRooms } from "../../lib/api";
 
   
 export default async function Rooms() {
-  const rooms = await fetchRooms()
+  const rooms = await fetchAllRooms()
   return (
     <div className="container mx-auto p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
     {rooms.map((room) => (

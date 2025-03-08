@@ -7,8 +7,10 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 
 // Fetch all rooms
-export const fetchRooms = async () => {
-  const { data } = await axios.get(`${API_BASE_URL}/rooms`);
+export const fetchAllRooms = async (email) => {
+  const { data } = await axios.get(`${API_BASE_URL}/rooms`, {
+    params: { email },
+  });
   return data;
 };
 
@@ -47,8 +49,10 @@ export const fetchAllBookings = async () => {
 };
 
 // Admin: Delete any booking
-export const deleteBookingAdmin = async (bookingId) => {
-  const { data } = await axios.delete(`${API_BASE_URL}/admin/bookings/${bookingId}`);
+export const deleteBookingAdmin = async (bookingId,email) => {
+  const { data } = await axios.delete(`${API_BASE_URL}/admin/bookings/${bookingId}`, {
+    params: { email },
+  });
   return data;
 };
 

@@ -1,13 +1,15 @@
-import AdminRoomCard from "@/app/components/AdminRoomCard/AdminRoomCard"
-import { fetchRooms } from "@/app/lib/api"
+import AdminRooms from "@/app/components/AdminRooms/AdminRooms";
+import { currentUser } from "@clerk/nextjs/server";
 
 export default async function AdminDashboard() {
- const rooms = await fetchRooms()
-   return (
-     <div className="container mx-auto p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-     {rooms.map((room) => (
-       <AdminRoomCard key={room._id} room={room} />
-     ))}
-   </div>
-   )
+  const user = await currentUser();
+  const email = user?.emailAddresses?.[0]?.emailAddress;
+
+  return (
+    <div className="container mx-auto p-4">
+      <h1 className="text-3xl font-bold text-teal-700 mb-6">All Rooms</h1>
+      {/* Pass only email; AdminRooms will fetch data using useQuery */}
+      <AdminRooms email={email} />
+    </div>
+  );
 }

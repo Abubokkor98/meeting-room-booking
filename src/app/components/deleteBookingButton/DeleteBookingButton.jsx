@@ -1,18 +1,16 @@
 "use client";
 
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { deleteUserBooking } from "@/app/lib/api";
 import toast from "react-hot-toast";
 
-export default function DeleteBookingButton({ id, email }) {
-  const queryClient = useQueryClient();
-
+export default function DeleteBookingButton({ id, email, refetch }) {
   const mutation = useMutation({
     mutationFn: () => deleteUserBooking(id, email),
     onSuccess: (data) => {
       if (data.deletedCount > 0) {
         toast.success("Booking deleted successfully!");
-        queryClient.invalidateQueries(["bookings", email]);
+        refetch();
       }
     },
     onError: (error) => {

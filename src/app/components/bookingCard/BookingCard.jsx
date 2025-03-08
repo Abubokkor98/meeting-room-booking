@@ -1,10 +1,9 @@
 import React from "react";
 import DeleteBookingButton from "../deleteBookingButton/DeleteBookingButton";
 
-export default function BookingCard({ booking, email }) {
+export default function BookingCard({ booking, email, refetch }) {
   return (
     <div
-      key={booking._id}
       className="flex flex-col bg-white shadow-md rounded-xl p-5 border border-gray-200 transition-transform transform"
     >
       <h2 className="text-xl font-semibold text-teal-700 mb-2">
@@ -28,8 +27,12 @@ export default function BookingCard({ booking, email }) {
           <li>No facilities available</li>
         )}
       </ul>
-      {/* delete btn */}
-      <DeleteBookingButton id={booking._id} email={email}></DeleteBookingButton>
+      {/* Delete button */}
+      <DeleteBookingButton
+        id={booking._id}
+        email={email}
+        refetch={refetch}
+      />
     </div>
   );
 }

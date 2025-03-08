@@ -1,30 +1,29 @@
 "use client";
 
 import { useState } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createBooking } from "@/app/lib/api";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
-
 const BookRoomButton = ({ room, userEmail }) => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   // Total price calculating
   const calcTotalPrice = (room) => {
     const [startHour, startMinute] = room.availability.startTime.split(":").map(Number);
     const [endHour, endMinute] = room.availability.endTime.split(":").map(Number);
-  
-    const durationInHours = (endHour * 60 + endMinute - (startHour* 60 + startMinute)) / 60;
-  
+
+    const durationInHours = (endHour * 60 + endMinute - (startHour * 60 + startMinute)) / 60;
+
     return (durationInHours * room.pricePerHour).toFixed(2);
   };
-  
 
-  const handleBooking = async () => {
-    setLoading(true);
-
-    try {
+  // Mutation for creating booking
+  const { mutate } = useMutation({
+    mutationFn: async () => {
       const bookingData = {
         userEmail: userEmail,
         roomId: room.id,
@@ -37,14 +36,28 @@ const BookRoomButton = ({ room, userEmail }) => {
       };
 
       const res = await createBooking(bookingData);
-      if (res.insertedId) {
+      return res;
+    },
+    onSuccess: (data) => {
+      // Invalidate queries to refetch bookings (or any related data)
+      queryClient.invalidateQueries(["userBookings", userEmail]);
+
+      if (data.insertedId) {
         toast.success("Booking successful!");
         router.push("/my-bookings");
       }
-    } catch (error) {
+    },
+    onError: (error) => {
       toast.error("Failed to book room. Please try again.");
-    }
-    setLoading(false);
+    },
+    onSettled: () => {
+      setLoading(false);
+    },
+  });
+
+  const handleBooking = () => {
+    setLoading(true);
+    mutate(); // Trigger the mutation
   };
 
   return (
@@ -54,7 +67,7 @@ const BookRoomButton = ({ room, userEmail }) => {
         className="mt-4 bg-teal-600 text-white px-6 py-3 rounded-lg hover:bg-teal-700 transition duration-300"
         disabled={loading}
       >
-        {loading ? "Booking..." : "Room Booked"}
+        {loading ? "Booking..." : "Book Room"}
       </button>
     </div>
   );

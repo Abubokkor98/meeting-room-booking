@@ -1,9 +1,12 @@
-import { useForm } from "react-hook-form"; 
+"use client";
+
+import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import { useMutation } from "@tanstack/react-query";
 import { updateRoom } from "@/app/lib/api";
 import toast from "react-hot-toast";
 
-const UpdateRoomModal = ({ room, onClose }) => {
+const UpdateRoomModal = ({ room, onClose, refetch }) => {
   const {
     _id,
     name,
@@ -23,7 +26,22 @@ const UpdateRoomModal = ({ room, onClose }) => {
   } = useForm();
   const router = useRouter();
 
-  const onSubmit = async (data) => {
+  // ✅ Use Mutation for updating the room
+  const mutation = useMutation({
+    mutationFn: (updatedFields) => updateRoom(_id, updatedFields),
+    onSuccess: () => {
+      toast.success("Room updated successfully!");
+      onClose();
+      refetch(); // 🔄 Refresh data after update
+      router.push("/dashboard");
+    },
+    onError: () => {
+      toast.error("Failed to update the room.");
+    },
+  });
+
+  // 🔄 Handle Form Submission
+  const onSubmit = (data) => {
     const updatedFields = {
       name: data.name || name,
       photo: data.photo || photo,
@@ -38,16 +56,7 @@ const UpdateRoomModal = ({ room, onClose }) => {
       amenities: data.amenities || amenities,
     };
 
-    try {
-      const res = await updateRoom(_id, updatedFields);
-      if (res.modifiedCount > 0) {
-        onClose();
-        toast.success("Update successfully");
-        router.push("/dashboard");
-      }
-    } catch (error) {
-      console.error("Error updating room:", error);
-    }
+    mutation.mutate(updatedFields); // ✅ Use mutation to update room
   };
 
   return (
@@ -175,8 +184,9 @@ const UpdateRoomModal = ({ room, onClose }) => {
             <button
               type="submit"
               className="px-4 py-2 bg-teal-600 text-white rounded-md hover:bg-teal-700"
+              disabled={mutation.isLoading}
             >
-              Update Room
+              {mutation.isLoading ? "Updating..." : "Update Room"}
             </button>
           </div>
         </form>

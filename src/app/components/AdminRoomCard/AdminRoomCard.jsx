@@ -1,23 +1,25 @@
 "use client";
 
 import React, { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
 import { deleteRoom } from "@/app/lib/api";
 import UpdateRoomModal from "../UpdateRoomModal/UpdateRoomModal";
 import toast from "react-hot-toast";
 
-export default function AdminRoomCard({ room }) {
+export default function AdminRoomCard({ room, refetch }) {
   const [showModal, setShowModal] = useState(false);
   const { name, photo, pricePerHour, _id } = room;
 
-  const handleDelete = async (id) => {
-    try {
-      const res = await deleteRoom(id);
-      if (res.deletedCount > 0) toast.success("Room deleted successfully!");
-    } catch (error) {
+  const mutation = useMutation({
+    mutationFn: deleteRoom,
+    onSuccess: () => {
+      toast.success("Room deleted successfully!");
+      refetch(); // 🔄 Refetch data after deleting
+    },
+    onError: () => {
       toast.error("Failed to delete the room.");
-      console.error(error);
-    }
-  };
+    },
+  });
 
   const modernDelete = (id) => {
     toast((t) => (
@@ -32,7 +34,7 @@ export default function AdminRoomCard({ room }) {
             className="bg-red-600 text-white px-3 py-1 rounded-md hover:bg-red-700"
             onClick={() => {
               toast.dismiss(t.id);
-              handleDelete(id);
+              mutation.mutate(id);
             }}
           >
             Yes
@@ -74,7 +76,7 @@ export default function AdminRoomCard({ room }) {
       </div>
 
       {showModal && (
-        <UpdateRoomModal room={room} onClose={() => setShowModal(false)} />
+        <UpdateRoomModal room={room} onClose={() => setShowModal(false)} refetch={refetch}/>
       )}
     </div>
   );
