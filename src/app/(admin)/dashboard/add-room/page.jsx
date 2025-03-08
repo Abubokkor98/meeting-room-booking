@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { addRoom, uploadImage } from "@/app/lib/api";
+import toast from "react-hot-toast";
 
 export default function AddRoomForm() {
   const {
@@ -14,19 +15,16 @@ export default function AddRoomForm() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  // Function to handle form submission
   const onSubmit = async (data) => {
     setIsLoading(true);
     
     try {
       // Upload image to ImgBB and get URL
       const image = { image: data.image[0] };
-      console.log(image);
+      // console.log(image);
       const res = await uploadImage(image);
-      console.log(res.data.id);
-
+      // console.log(res.data.id);
       if (res.data.id) {
-
         // Send the room data with image URL to the server
         const newRoom = {
           name: data.name,
@@ -34,7 +32,7 @@ export default function AddRoomForm() {
           capacity: data.capacity,
           location: data.location,
           amenities: data.amenities,
-          priceperHour: data.pricePerHour,
+          pricePerHour: data.pricePerHour,
           availability: data.availability,
           description: data.description,
         };
@@ -43,7 +41,7 @@ export default function AddRoomForm() {
         const response = await addRoom(newRoom);
         console.log(response);
         if (response.insertedId) {
-          console.log("Room added successfully", response);
+          toast.success("Room added successfully", response);
           router.push("/dashboard");
         }
       }

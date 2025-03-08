@@ -1,7 +1,8 @@
 import localFont from "next/font/local";
 import "./globals.css";
-import { AuthProvider } from "./provider/AuthProvider";
 import { Toaster } from "react-hot-toast";
+import { ClerkLoaded, ClerkLoading, ClerkProvider } from "@clerk/nextjs";
+import QueryProvider from "./provider/QueryProvider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -21,15 +22,24 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <AuthProvider>
-        <Toaster position="top-center" />
-          <main>{children}</main>
-        </AuthProvider>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        >
+          <ClerkLoading>
+            <div className="flex items-center justify-center h-screen text-2xl">
+              LOADING...
+            </div>
+          </ClerkLoading>
+          <ClerkLoaded>
+            <QueryProvider>
+              <Toaster position="top-center" />
+              <main>{children}</main>
+            </QueryProvider>
+          </ClerkLoaded>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

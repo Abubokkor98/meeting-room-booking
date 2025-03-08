@@ -1,34 +1,41 @@
-import { NextResponse } from "next/server";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
+import { NextResponse } from 'next/server';
 
-export async function middleware(req) {
-  const { getUser } = getKindeServerSession();
-  const user = await getUser();
+const isPublicRoute = createRouteMatcher(['/','/sign-in(.*)', '/sign-up(.*)']);
+const isAdminRoute = createRouteMatcher(['/dashboard/(.*)']);
+const isUserRoute = createRouteMatcher(['/rooms','/my-bookings']);
 
-  const adminEmail = "mail.abubokkor@gmail.com";
-  const isAdmin = user?.email === adminEmail;
+export default clerkMiddleware(async (auth, req) => {
+  const { userId, user } = auth;
+  console.log('role',auth);
+  console.log(userId, user);
 
-  const url = new URL(req.url); // Use new URL() for better reliability
-
-  // Prevent infinite login redirect loop
-  if (!user && url.pathname !== "/api/auth/login") {
-    return NextResponse.redirect(new URL("/api/auth/login", req.url));
+  if (!isPublicRoute(req)) {
+    await auth.protect();
   }
 
-  // Redirect non-admin users away from dashboard
-  if (url.pathname.startsWith("/dashboard") && !isAdmin) {
-    return NextResponse.redirect(new URL("/rooms", req.url));
-  }
+  if (!userId) return NextResponse.next();
 
-  // Redirect admins away from user-only pages
-  if (url.pathname.startsWith("/rooms") && isAdmin) {
-    return NextResponse.redirect(new URL("/dashboard", req.url));
+  // ✅ Safely access user metadata
+  if (user) {
+    const role = user.publicMetadata?.role || 'user';
+    console.log("User Role:", role);
+
+    // Role-based route redirection
+    if (role !== 'admin' && isAdminRoute(req)) {
+      return NextResponse.redirect(new URL('/rooms', req.url));
+    }
+
+    if (role === 'admin' && isUserRoute(req)) {
+      return NextResponse.redirect(new URL('/dashboard', req.url));
+    }
+  } else {
+    console.log("User not found in auth object");
   }
 
   return NextResponse.next();
-}
+});
 
-// Apply middleware to specific paths
 export const config = {
-  matcher: ["/rooms", "/dashboard/:path*"],
+  matcher: ['/((?!.*\\..*|_next).*)', '/', '/(api|trpc)(.*)'],
 };

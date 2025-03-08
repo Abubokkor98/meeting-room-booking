@@ -20,7 +20,7 @@ export const fetchRoomById = async (id) => {
 
 // Fetch user-specific bookings
 export const fetchUserBookings = async (email) => {
-  const { data } = await axios.get(`${API_BASE_URL}/dashboard`, {
+  const { data } = await axios.get(`${API_BASE_URL}/bookings`, {
     params: { email },
   });
   return data;

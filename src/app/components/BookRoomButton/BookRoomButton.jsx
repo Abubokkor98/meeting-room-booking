@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
 
-const BookRoomButton = ({ room, user }) => {
+const BookRoomButton = ({ room, userEmail }) => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
@@ -26,7 +26,7 @@ const BookRoomButton = ({ room, user }) => {
 
     try {
       const bookingData = {
-        userEmail: user.email,
+        userEmail: userEmail,
         roomId: room.id,
         roomName: room.name,
         facility: room.amenities,
@@ -54,7 +54,7 @@ const BookRoomButton = ({ room, user }) => {
         className="mt-4 bg-teal-600 text-white px-6 py-3 rounded-lg hover:bg-teal-700 transition duration-300"
         disabled={loading}
       >
-        {loading ? "Booking..." : "Book Room"}
+        {loading ? "Booking..." : "Room Booked"}
       </button>
     </div>
   );

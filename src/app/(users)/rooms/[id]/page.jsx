@@ -1,13 +1,13 @@
 import BookRoomButton from "@/app/components/BookRoomButton/BookRoomButton";
 import { fetchRoomById } from "@/app/lib/api";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { currentUser } from "@clerk/nextjs/server";
 
 export default async function DynamicRoom({ params }) {
   const { id } = params;
   const room = await fetchRoomById(id);
 
-  const { getUser } = getKindeServerSession();
-  const user = await getUser();
+  const user = await currentUser();
+  const userEmail= (user.emailAddresses?.[0]?.emailAddress);
 
   return (
     <div className="flex flex-col justify-center p-4">
@@ -38,7 +38,7 @@ export default async function DynamicRoom({ params }) {
       <p className="text-gray-500 my-4">{room.description}</p>
 
       {/* Book btn */}
-      <BookRoomButton room={room} user={user} />
+      <BookRoomButton room={room} userEmail={userEmail} />
     </div>
   );
 }
