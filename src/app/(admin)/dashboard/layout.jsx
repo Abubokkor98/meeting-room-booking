@@ -1,7 +1,8 @@
 import Sidebar from "../../_components/sidebar/Sidebar";
 
 export const metadata = {
-  title: "Meeting Room Books",
+  title: "Meeting Room Booking - Admin",
+  description: "Manage meeting room bookings efficiently as an admin.",
 };
 
 export default function AdminLayout({ children }) {

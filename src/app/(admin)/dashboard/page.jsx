@@ -1,6 +1,11 @@
 import { currentUser } from "@clerk/nextjs/server";
 import AdminRooms from "../../_components/AdminRooms/AdminRooms";
 
+export const metadata = {
+  title: "Admin Dashboard - Meeting Room Booking",
+  description: "Manage and view all rooms as an admin.",
+};
+
 export default async function AdminDashboard() {
   const user = await currentUser();
   const email = user?.emailAddresses?.[0]?.emailAddress;

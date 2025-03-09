@@ -1,8 +1,8 @@
 import Sidebar from "../_components/sidebar/Sidebar";
 
 export const metadata = {
-  title: "All Rooms",
-  description: "View and book rooms",
+  title: "User Dashboard - Meeting Room Booking",
+  description: "Manage your bookings, view available rooms, and access your favorite rooms.",
 };
 
 export default function UserLayout({ children }) {

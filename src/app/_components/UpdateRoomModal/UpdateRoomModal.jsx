@@ -26,7 +26,7 @@ const UpdateRoomModal = ({ room, onClose, refetch }) => {
   } = useForm();
   const router = useRouter();
 
-  // ✅ Use Mutation for updating the room
+  // use mutation to update the room
   const mutation = useMutation({
     mutationFn: (updatedFields) => updateRoom(_id, updatedFields),
     onSuccess: () => {
@@ -40,7 +40,7 @@ const UpdateRoomModal = ({ room, onClose, refetch }) => {
     },
   });
 
-  // 🔄 Handle Form Submission
+  // handle form submit
   const onSubmit = (data) => {
     const updatedFields = {
       name: data.name || name,
@@ -56,13 +56,15 @@ const UpdateRoomModal = ({ room, onClose, refetch }) => {
       amenities: data.amenities || amenities,
     };
 
-    mutation.mutate(updatedFields); // ✅ Use mutation to update room
+    mutation.mutate(updatedFields);
   };
 
   return (
-    <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center">
+    <div className="fixed inset-0 bg-gray-500 bg-opacity-50 z-10 flex justify-center items-center">
       <div className="bg-white p-6 rounded-lg w-full sm:max-w-lg max-h-[90vh] overflow-y-auto">
-        <h2 className="text-xl font-semibold text-teal-600 mb-4">Update Room</h2>
+        <h2 className="text-xl font-semibold text-teal-600 mb-4">
+          Update Room
+        </h2>
 
         <form onSubmit={handleSubmit(onSubmit)}>
           {/* Room Name */}

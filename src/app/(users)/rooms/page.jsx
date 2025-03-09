@@ -1,6 +1,11 @@
 import { fetchAllRooms } from "../../../lib/api";
 import RoomCard from "../../_components/RoomCard/RoomCard";
 
+export const metadata = {
+  title: "Available Rooms - Meeting Room Booking",
+  description: "Browse and book from a list of available meeting rooms tailored to your needs.",
+};
+
 export default async function Rooms() {
   const rooms = await fetchAllRooms();
 

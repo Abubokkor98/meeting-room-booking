@@ -3,6 +3,11 @@ import { fetchRoomById } from "../../../../lib/api";
 import BookRoomButton from "../../../_components/BookRoomButton/BookRoomButton";
 import FavoriteButton from "../../../_components/FavoriteButton/FavoriteButton";
 
+export const metadata = {
+  title: "Room Details - Meeting Room Booking",
+  description: "View details, amenities, and book your preferred meeting room.",
+};
+
 export default async function DynamicRoom({ params }) {
   const { id } = params;
   const room = await fetchRoomById(id);

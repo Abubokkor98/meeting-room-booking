@@ -1,14 +1,11 @@
 "use client";
 
-import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { createBooking } from "../../../lib/api";
 
 const BookRoomButton = ({ room, userEmail }) => {
-  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const queryClient = useQueryClient();
 
@@ -31,7 +28,7 @@ const BookRoomButton = ({ room, userEmail }) => {
   const { mutate } = useMutation({
     mutationFn: async () => {
       const bookingData = {
-        userEmail: userEmail,
+        userEmail,
         roomId: room.id,
         roomName: room.name,
         roomImage: room.photo,
@@ -43,11 +40,9 @@ const BookRoomButton = ({ room, userEmail }) => {
         status: "pending",
       };
 
-      const res = await createBooking(bookingData);
-      return res;
+      return await createBooking(bookingData);
     },
     onSuccess: (data) => {
-      // Invalidate queries to refetch bookings (or any related data)
       queryClient.invalidateQueries(["userBookings", userEmail]);
 
       if (data.insertedId) {
@@ -55,29 +50,18 @@ const BookRoomButton = ({ room, userEmail }) => {
         router.push("/my-bookings");
       }
     },
-    onError: (error) => {
+    onError: () => {
       toast.error("Failed to book room. Please try again.");
-    },
-    onSettled: () => {
-      setLoading(false);
     },
   });
 
-  const handleBooking = () => {
-    setLoading(true);
-    mutate(); // Trigger the mutation
-  };
-
   return (
-    <div>
-      <button
-        onClick={handleBooking}
-        className="mt-4 bg-teal-600 text-white px-6 py-3 rounded-lg hover:bg-teal-700 transition duration-300"
-        disabled={loading}
-      >
-        {loading ? "Booking..." : "Book Room"}
-      </button>
-    </div>
+    <button
+      onClick={() => mutate()}
+      className="mt-4 bg-teal-600 text-white px-6 py-3 rounded-lg hover:bg-teal-700 transition duration-300"
+    >
+      Book Room
+    </button>
   );
 };
 
