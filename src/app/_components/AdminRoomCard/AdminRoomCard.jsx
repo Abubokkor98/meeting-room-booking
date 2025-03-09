@@ -14,7 +14,8 @@ export default function AdminRoomCard({ room, refetch }) {
     mutationFn: deleteRoom,
     onSuccess: () => {
       toast.success("Room deleted successfully!");
-      refetch(); // 🔄 Refetch data after deleting
+      // refetch the rooms
+      refetch();
     },
     onError: () => {
       toast.error("Failed to delete the room.");
@@ -51,32 +52,47 @@ export default function AdminRoomCard({ room, refetch }) {
   };
 
   return (
-    <div className="bg-white shadow-lg rounded-2xl p-4 w-full sm:w-80">
-      <img
-        src={photo}
-        alt={name}
-        className="rounded-xl w-full h-40 object-cover mb-4"
-      />
-      <h2 className="text-xl font-semibold text-teal-600">{name}</h2>
-      <p className="text-gray-800">Price: ৳{pricePerHour} per hour</p>
+    <div className="bg-white shadow-md hover:shadow-xl transition-shadow rounded-2xl p-5 w-full sm:w-80">
+      {/* image */}
+      <div className="relative w-full h-44">
+        <img
+          src={photo}
+          alt={name}
+          className="rounded-xl w-full h-full object-cover"
+        />
+      </div>
 
-      <div className="mt-4 flex justify-between">
+      {/* details */}
+      <div className="mt-4">
+        <h2 className="text-xl font-semibold text-teal-600">{name}</h2>
+        <p className="text-gray-700 text-sm mt-1">
+          Price: <span className="font-medium">৳{pricePerHour} per hour</span>
+        </p>
+      </div>
+
+      {/* action btns */}
+      <div className="mt-5 flex gap-3">
         <button
           onClick={() => setShowModal(true)}
-          className="bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-teal-700"
+          className="flex-1 bg-teal-600 text-white px-4 py-2.5 rounded-lg font-medium transition hover:bg-teal-700"
         >
           Update
         </button>
         <button
           onClick={() => modernDelete(_id)}
-          className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700"
+          className="flex-1 bg-red-600 text-white px-4 py-2.5 rounded-lg font-medium transition hover:bg-red-700"
         >
           Delete
         </button>
       </div>
 
+      {/* update modal component */}
       {showModal && (
-        <UpdateRoomModal room={room} onClose={() => setShowModal(false)} refetch={refetch}/>
+        <UpdateRoomModal
+          room={room}
+          onClose={() => setShowModal(false)}
+          refetch={refetch}
+        />
       )}
     </div>
   );

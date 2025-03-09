@@ -1,5 +1,5 @@
 import Image from "next/image";
-import backgroundimage from "../../public/meeting-room.jpg";
+import backGroundImage from "../../public/meeting-room.jpg";
 import { SparklesIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 
@@ -7,20 +7,13 @@ import { auth, currentUser } from "@clerk/nextjs/server";
 
 
 export default async function Home() {
-  // const user = await currentUser();
-  // console.log(user.publicMetadata.role)
-  // const user = await auth();
-  // // const role = sessionClaims?.publicMetadata?.role;
-  // console.log(user);
-
-
 
   return (
     <div className="flex relative flex-col justify-center items-center h-screen">
       <Image
         className="blur-sm"
-        alt="backgroundimage"
-        src={backgroundimage}
+        alt="backGroundImage"
+        src={backGroundImage}
         placeholder="blur"
         quality={100}
         fill
