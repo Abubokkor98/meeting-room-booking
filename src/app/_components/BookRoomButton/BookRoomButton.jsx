@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createBooking } from "@/app/lib/api";
+import { createBooking } from "@/lib/api";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 

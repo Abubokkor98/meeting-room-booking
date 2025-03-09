@@ -2,7 +2,8 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import { ClerkLoaded, ClerkLoading, ClerkProvider } from "@clerk/nextjs";
-import QueryProvider from "./provider/QueryProvider";
+import QueryProvider from "@/provider/QueryProvider";
+
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",

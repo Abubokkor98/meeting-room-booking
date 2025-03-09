@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { deleteRoom } from "@/app/lib/api";
+import { deleteRoom } from "@/lib/api";
 import UpdateRoomModal from "../UpdateRoomModal/UpdateRoomModal";
 import toast from "react-hot-toast";
 

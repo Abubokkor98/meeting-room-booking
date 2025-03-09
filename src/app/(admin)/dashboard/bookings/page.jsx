@@ -1,4 +1,4 @@
-import { fetchAllBookings } from "@/app/lib/api";
+import { fetchAllBookings } from "@/lib/api";
 
 export default async function AllBookings() {
 

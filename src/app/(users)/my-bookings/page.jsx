@@ -1,5 +1,5 @@
 import BookingsList from "@/app/_components/BookingsList/BookingsList";
-import { fetchUserBookings } from "@/app/lib/api";
+import { fetchUserBookings } from "@/lib/api";
 import { currentUser } from "@clerk/nextjs/server";
 
 export default async function MyBookings() {

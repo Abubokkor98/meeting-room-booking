@@ -1,5 +1,5 @@
 import RoomCard from "../../_components/RoomCard/RoomCard";
-import { fetchAllRooms } from "../../lib/api";
+import { fetchAllRooms } from "../../../lib/api";
 
   
 export default async function Rooms() {
