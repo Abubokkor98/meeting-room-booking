@@ -1,11 +1,11 @@
 import { currentUser } from "@clerk/nextjs/server";
 import { fetchRoomById } from "../../../../lib/api";
 import BookRoomButton from "../../../_components/BookRoomButton/BookRoomButton";
+import FavoriteButton from "../../../_components/FavoriteButton/FavoriteButton";
 
 export default async function DynamicRoom({ params }) {
   const { id } = params;
   const room = await fetchRoomById(id);
-
   const user = await currentUser();
   const userEmail = user?.emailAddresses?.[0]?.emailAddress;
 
@@ -55,9 +55,10 @@ export default async function DynamicRoom({ params }) {
         {/* Description */}
         <p className="text-gray-600 mt-4">{room.description}</p>
 
-        {/* Book Room Button */}
-        <div className="mt-6">
+        {/* Buttons Section */}
+        <div className="mt-6 flex gap-4 justify-center">
           <BookRoomButton room={room} userEmail={userEmail} />
+          <FavoriteButton room={room} /> 
         </div>
       </div>
     </div>

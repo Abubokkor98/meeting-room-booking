@@ -6,7 +6,7 @@ import {
   PlusSquare,
   CalendarCheck,
   LogOut,
-  BookOpen,
+  BookOpen,HeartIcon,
 } from "lucide-react";
 import Link from "next/link";
 import { SignOutButton } from "./SignOutButton";
@@ -23,6 +23,7 @@ const adminLinks = [
 const userLinks = [
   { name: "Home", href: "/", icon: Home },
   { name: "Book Rooms", href: "/rooms", icon: BedDouble },
+  { name: "My Favorites", href: "/favorite-rooms", icon: HeartIcon },
   { name: "My Bookings", href: "/my-bookings", icon: BookOpen },
 ];
 
