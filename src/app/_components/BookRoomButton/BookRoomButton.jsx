@@ -14,10 +14,15 @@ const BookRoomButton = ({ room, userEmail }) => {
 
   // Total price calculating
   const calcTotalPrice = (room) => {
-    const [startHour, startMinute] = room.availability.startTime.split(":").map(Number);
-    const [endHour, endMinute] = room.availability.endTime.split(":").map(Number);
+    const [startHour, startMinute] = room.availability.startTime
+      .split(":")
+      .map(Number);
+    const [endHour, endMinute] = room.availability.endTime
+      .split(":")
+      .map(Number);
 
-    const durationInHours = (endHour * 60 + endMinute - (startHour * 60 + startMinute)) / 60;
+    const durationInHours =
+      (endHour * 60 + endMinute - (startHour * 60 + startMinute)) / 60;
 
     return (durationInHours * room.pricePerHour).toFixed(2);
   };
@@ -34,6 +39,7 @@ const BookRoomButton = ({ room, userEmail }) => {
         startTime: room.availability.startTime,
         endTime: room.availability.endTime,
         totalPrice: calcTotalPrice(room),
+        status: "pending",
       };
 
       const res = await createBooking(bookingData);

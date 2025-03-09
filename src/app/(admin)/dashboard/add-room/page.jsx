@@ -64,7 +64,7 @@ export default function AddRoomForm() {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-semibold text-center mb-6">Add New Room</h1>
+      <h1 className="text-2xl text-teal-600 font-semibold text-center mb-6">Add New Room</h1>
 
       <form
         onSubmit={handleSubmit(onSubmit)}

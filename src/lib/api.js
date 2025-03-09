@@ -1,10 +1,6 @@
 import axios from "axios";
 
-
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-
-
-
 
 // Fetch all rooms
 export const fetchAllRooms = async (email) => {
@@ -55,16 +51,16 @@ export const fetchAllBookings = async (page = 1, limit = 10) => {
   return data;
 };
 
-
 // Admin: Delete any booking
-export const deleteBookingAdmin = async (bookingId,email) => {
-  const { data } = await axios.delete(`${API_BASE_URL}/admin/bookings/${bookingId}`, {
-    params: { email },
-  });
+export const deleteBookingAdmin = async (bookingId, email) => {
+  const { data } = await axios.delete(
+    `${API_BASE_URL}/admin/bookings/${bookingId}`,
+    {
+      params: { email },
+    }
+  );
   return data;
 };
-
-
 
 // Admin: Fetch all rooms
 // export const fetchAdminRooms = async () => {
@@ -94,6 +90,15 @@ export const updateRoom = async (roomId, updatedRoom) => {
   const { data } = await axios.put(
     `${API_BASE_URL}/admin/rooms/${roomId}`,
     updatedRoom
+  );
+  return data;
+};
+
+// Admin: Update booking status
+export const updateBookingStatus = async (bookingId, status) => {
+  const { data } = await axios.patch(
+    `${API_BASE_URL}/admin/bookings/${bookingId}`,
+    status
   );
   return data;
 };
