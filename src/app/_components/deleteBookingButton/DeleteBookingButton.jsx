@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation } from "@tanstack/react-query";
-import { deleteUserBooking } from "@/lib/api";
+import { deleteUserBooking } from "../../../lib/api";
 import toast from "react-hot-toast";
 
 export default function DeleteBookingButton({ id, email, refetch }) {

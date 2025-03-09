@@ -1,5 +1,5 @@
-import AdminRooms from "@/app/_components/AdminRooms/AdminRooms";
 import { currentUser } from "@clerk/nextjs/server";
+import AdminRooms from "../../_components/AdminRooms/AdminRooms";
 
 export default async function AdminDashboard() {
   const user = await currentUser();

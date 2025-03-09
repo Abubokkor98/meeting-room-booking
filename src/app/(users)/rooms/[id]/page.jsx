@@ -1,6 +1,7 @@
-import BookRoomButton from "@/app/_components/BookRoomButton/BookRoomButton";
-import { fetchRoomById } from "@/lib/api";
+
 import { currentUser } from "@clerk/nextjs/server";
+import { fetchRoomById } from "../../../../lib/api";
+import BookRoomButton from "../../../_components/BookRoomButton/BookRoomButton";
 
 export default async function DynamicRoom({ params }) {
   const { id } = params;

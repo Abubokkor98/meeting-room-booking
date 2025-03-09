@@ -43,10 +43,18 @@ export const deleteUserBooking = async (bookingId, email) => {
 };
 
 // Admin: Fetch all bookings
-export const fetchAllBookings = async () => {
-  const { data } = await axios.get(`${API_BASE_URL}/admin/bookings`);
+// export const fetchAllBookings = async () => {
+//   const { data } = await axios.get(`${API_BASE_URL}/admin/bookings`);
+//   return data;
+// };
+// Admin: Fetch all bookings
+export const fetchAllBookings = async (page = 1, limit = 10) => {
+  const { data } = await axios.get(`${API_BASE_URL}/admin/bookings`, {
+    params: { page, limit },
+  });
   return data;
 };
+
 
 // Admin: Delete any booking
 export const deleteBookingAdmin = async (bookingId,email) => {

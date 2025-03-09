@@ -1,8 +1,9 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { fetchAllRooms } from "@/lib/api";
 import AdminRoomCard from "../AdminRoomCard/AdminRoomCard";
+import { fetchAllRooms } from "../../../lib/api";
+
 
 export default function AdminRooms({ email }) {
   // Fetch all rooms dynamically using useQuery

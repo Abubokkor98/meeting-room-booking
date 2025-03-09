@@ -1,6 +1,7 @@
-import BookingsList from "@/app/_components/BookingsList/BookingsList";
-import { fetchUserBookings } from "@/lib/api";
+
 import { currentUser } from "@clerk/nextjs/server";
+import { fetchUserBookings } from "../../../lib/api";
+import BookingsList from "../../_components/BookingsList/BookingsList";
 
 export default async function MyBookings() {
   const user = await currentUser();

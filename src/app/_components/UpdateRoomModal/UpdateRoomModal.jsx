@@ -3,8 +3,8 @@
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
-import { updateRoom } from "@/lib/api";
 import toast from "react-hot-toast";
+import { updateRoom } from "../../../lib/api";
 
 const UpdateRoomModal = ({ room, onClose, refetch }) => {
   const {

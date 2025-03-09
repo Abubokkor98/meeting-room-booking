@@ -16,7 +16,7 @@ const adminLinks = [
   { name: "Go Home", href: "/", icon: Home },
   { name: "Manage Rooms", href: "/dashboard", icon: BedDouble },
   { name: "Add Room", href: "/dashboard/add-room", icon: PlusSquare },
-  { name: "All Bookings", href: "/dashboard/bookings", icon: CalendarCheck },
+  { name: "All Bookings", href: "/dashboard/all-bookings", icon: CalendarCheck },
 ];
 
 // links for user

@@ -1,4 +1,4 @@
-import Sidebar from "@/app/_components/sidebar/Sidebar";
+import Sidebar from "../_components/sidebar/Sidebar";
 
 export const metadata = {
   title: "All Rooms",

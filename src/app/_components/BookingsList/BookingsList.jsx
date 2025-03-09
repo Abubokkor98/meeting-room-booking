@@ -1,8 +1,8 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { fetchUserBookings } from "@/lib/api";
-import BookingCard from "@/app/_components/bookingCard/BookingCard";
+import { fetchUserBookings } from "../../../lib/api";
+import BookingCard from "../bookingCard/BookingCard";
 
 export default function BookingsList({ bookings, email }) {
   // Fetch user bookings with React Query

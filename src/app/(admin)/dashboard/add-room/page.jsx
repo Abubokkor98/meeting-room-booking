@@ -4,8 +4,8 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { addRoom, uploadImage } from "@/lib/api";
 import toast from "react-hot-toast";
+import { addRoom, uploadImage } from "../../../../lib/api";
 
 export default function AddRoomForm() {
   const {

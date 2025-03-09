@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createBooking } from "@/lib/api";
+
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { createBooking } from "../../../lib/api";
 
 const BookRoomButton = ({ room, userEmail }) => {
   const [loading, setLoading] = useState(false);
