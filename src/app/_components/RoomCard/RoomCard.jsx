@@ -3,7 +3,7 @@ import React from "react";
 
 export default function RoomCard({ room }) {
   return (
-    <div className="bg-white shadow-lg rounded-xl overflow-hidden p-6 w-full sm:w-80 md:w-96 mx-auto">
+    <div className="bg-white shadow-lg rounded-xl overflow-hidden p-6 w-full">
       <img
         src={room.photo}
         alt={room.name}

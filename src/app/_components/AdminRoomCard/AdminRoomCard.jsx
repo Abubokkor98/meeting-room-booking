@@ -52,7 +52,7 @@ export default function AdminRoomCard({ room, refetch }) {
   };
 
   return (
-    <div className="bg-white shadow-md hover:shadow-xl transition-shadow rounded-2xl p-5 w-full sm:w-80">
+    <div className="bg-white shadow-md hover:shadow-xl transition-shadow rounded-2xl p-5 w-full">
       {/* image */}
       <div className="relative w-full h-44">
         <img
