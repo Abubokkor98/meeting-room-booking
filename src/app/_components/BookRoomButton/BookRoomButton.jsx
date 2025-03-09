@@ -34,6 +34,7 @@ const BookRoomButton = ({ room, userEmail }) => {
         userEmail: userEmail,
         roomId: room.id,
         roomName: room.name,
+        roomImage: room.photo,
         facility: room.amenities,
         date: new Date().toISOString().split("T")[0],
         startTime: room.availability.startTime,

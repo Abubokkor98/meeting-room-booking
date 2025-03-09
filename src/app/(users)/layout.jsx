@@ -2,14 +2,19 @@ import Sidebar from "../_components/sidebar/Sidebar";
 
 export const metadata = {
   title: "All Rooms",
-  description: "view and book rooms",
+  description: "View and book rooms",
 };
 
 export default function UserLayout({ children }) {
   return (
-    <div className="flex xs:flex-col sm:flex-col md:flex-row lg:flex-row xl:flex-row min-h-screen">
+    <div className="flex flex-col md:flex-row min-h-screen">
+      {/* Sidebar */}
       <Sidebar />
-      <div className="flex flex-wrap p-2 justify-center w-full">{children}</div>
+
+      {/* Main Content */}
+      <div className="flex flex-col flex-grow p-4">
+        {children}
+      </div>
     </div>
   );
 }
