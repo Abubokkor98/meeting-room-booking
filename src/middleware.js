@@ -1,42 +1,34 @@
-import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
-import { NextResponse } from "next/server";
+import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
+import { NextResponse } from 'next/server'
 
-const isPublicRoute = createRouteMatcher(["/", "/sign-in(.*)", "/sign-up(.*)"]);
-const isAdminRoute = createRouteMatcher(["/dashboard/(.*)"]);
-const isUserRoute = createRouteMatcher(["/rooms", "/my-bookings"]);
+const isProtectedRoute = createRouteMatcher(['/dashboard(.*)', '/rooms(.*)', '/my-bookings(.*)'])
+const isAdminRoute = createRouteMatcher(['/dashboard(.*)'])
+const isMemberRoute = createRouteMatcher(['/rooms(.*)', '/my-bookings(.*)'])
+
 
 export default clerkMiddleware(async (auth, req) => {
-  const { userId, user } = auth;
-  // console.log(req);
-  console.log("role", auth);
-  console.log(user);
+  if (isProtectedRoute(req)) {
+    await auth.protect()
 
-  if (!isPublicRoute(req)) {
-    await auth.protect();
-  }
-
-  if (!userId) return NextResponse.next();
-
-  // ✅ Safely access user metadata
-  if (user) {
-    const role = user.publicMetadata?.role || "user";
-    console.log("User Role:", role);
-
-    // Role-based route redirection
-    if (role !== "admin" && isAdminRoute(req)) {
-      return NextResponse.redirect(new URL("/rooms", req.url));
+    // stop member from accessing admin routes
+    if (isAdminRoute(req) && (await auth()).sessionClaims?.metadata?.role !== 'meetingroom_admin') {
+      const url = new URL('/', req.url)
+      return NextResponse.redirect(url)
     }
 
-    if (role === "admin" && isUserRoute(req)) {
-      return NextResponse.redirect(new URL("/dashboard", req.url));
+    // stop admin from accessing member routes
+    if (isMemberRoute(req) && (await auth()).sessionClaims?.metadata?.role === 'meetingroom_admin') {
+      const url = new URL('/dashboard', req.url)
+      return NextResponse.redirect(url)
     }
-  } else {
-    console.log("User not found in auth object");
   }
-
-  return NextResponse.next();
-});
+})
 
 export const config = {
-  matcher: ["/((?!.*\\..*|_next).*)", "/", "/(api|trpc)(.*)"],
-};
+  matcher: [
+    // Skip Next.js internals and all static files, unless found in search params
+    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
+    // Always run for API routes
+    '/(api|trpc)(.*)',
+  ],
+}

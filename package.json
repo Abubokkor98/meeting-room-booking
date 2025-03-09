@@ -21,6 +21,8 @@
     "react-hot-toast": "^2.5.2"
   },
   "devDependencies": {
+    "@types/node": "22.13.10",
+    "@types/react": "19.0.10",
     "eslint": "^8",
     "eslint-config-next": "14.2.23",
     "postcss": "^8",
