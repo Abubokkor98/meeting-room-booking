@@ -1,4 +1,4 @@
-import { SignedOut, UserButton } from "@clerk/nextjs";
+import { UserButton } from "@clerk/nextjs";
 import { currentUser } from "@clerk/nextjs/server";
 import {
   Home,
@@ -7,11 +7,11 @@ import {
   CalendarCheck,
   LogOut,
   BookOpen,
-  User,
 } from "lucide-react";
 import Link from "next/link";
 import { SignOutButton } from "./SignOutButton";
 
+// links for admin
 const adminLinks = [
   { name: "Go Home", href: "/", icon: Home },
   { name: "Manage Rooms", href: "/dashboard", icon: BedDouble },
@@ -19,6 +19,7 @@ const adminLinks = [
   { name: "All Bookings", href: "/dashboard/bookings", icon: CalendarCheck },
 ];
 
+// links for user
 const userLinks = [
   { name: "Home", href: "/", icon: Home },
   { name: "Book Rooms", href: "/rooms", icon: BedDouble },
@@ -27,9 +28,9 @@ const userLinks = [
 
 export default async function NavLinks() {
   const user = await currentUser();
-  // console.log(user.publicMetadata.role);
+  const isAdmin = user.publicMetadata?.role === "meetingroom_admin";
 
-  const isAdmin = user.publicMetadata?.role === "admin";
+  // get links based on user role
   const links = isAdmin ? adminLinks : userLinks;
 
   return (
