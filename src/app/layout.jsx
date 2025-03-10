@@ -3,6 +3,7 @@ import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import { ClerkLoaded, ClerkLoading, ClerkProvider } from "@clerk/nextjs";
 import QueryProvider from "../provider/QueryProvider";
+import LoadingSpinner from "./_components/LoadingSpinner/LoadingSpinner";
 
 
 const geistSans = localFont({
@@ -29,9 +30,9 @@ export default function RootLayout({ children }) {
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
           <ClerkLoading>
-            <div className="flex items-center justify-center h-screen text-2xl">
-              LOADING...
-            </div>
+            <>
+             <LoadingSpinner/>
+            </>
           </ClerkLoading>
           <ClerkLoaded>
             <QueryProvider>
