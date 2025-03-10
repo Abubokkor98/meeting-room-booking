@@ -12,7 +12,7 @@ export default async function MyBookings() {
   const user = await currentUser();
   const email = user?.emailAddresses?.[0]?.emailAddress;
 
-  // Fetch bookings on the server
+  // Fetch bookings for the current user
   const bookings = email ? await fetchUserBookings(email) : [];
 
   return (
@@ -22,7 +22,7 @@ export default async function MyBookings() {
       {bookings.length === 0 ? (
         <p className="text-red-600 text-lg text-center">You have no bookings yet. Start by booking a meeting room!</p>
       ) : (
-        // Pass fetched bookings to a client component
+        // Pass fetched bookings to BookingsList client component
         <BookingsList bookings={bookings} email={email} />
       )}
     </div>

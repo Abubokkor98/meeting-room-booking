@@ -1,4 +1,4 @@
-"use client"; // This is required for using client-side React features in Next.js
+"use client";
 
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -19,7 +19,7 @@ export default function AddRoomForm() {
     formState: { errors },
   } = useForm();
 
-  // Define mutation for adding the room with Tanstack Query
+  // use mutation
   const mutation = useMutation({
     mutationFn: async (data) => {
       setIsLoading(true);
@@ -47,7 +47,7 @@ export default function AddRoomForm() {
           if (response.insertedId) {
             toast.success("Room added successfully");
 
-            //invalidate the allRooms query to trigger a refetch
+            //invalidate allRooms query
             queryClient.invalidateQueries(["allRooms"]);
 
             //redirect user

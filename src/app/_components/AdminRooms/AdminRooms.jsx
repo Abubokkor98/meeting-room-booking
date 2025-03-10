@@ -13,11 +13,11 @@ export default function AdminRooms({ email }) {
   });
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
       {allRooms.map((room) => (
         // pass the room and email to the AdminRoomCard component
         <AdminRoomCard key={room._id} room={room} email={email} refetch={refetch} />
       ))}
-    </div>
+    </section>
   );
 }

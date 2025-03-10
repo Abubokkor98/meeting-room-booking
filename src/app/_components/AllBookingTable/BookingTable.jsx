@@ -18,7 +18,7 @@ export default function BookingTable({ bookings, refetch }) {
   };
 
   return (
-    <div className="overflow-x-auto mb-6">
+    <section className="overflow-x-auto mb-6">
       <table className="min-w-full bg-white border border-gray-200">
         <thead>
           <tr className="bg-gray-100 text-left">
@@ -58,7 +58,6 @@ export default function BookingTable({ bookings, refetch }) {
                 {booking.status === "pending" ? (
                   <button
                     onClick={() => handleConfirm(booking._id)}
-                    disabled={mutation.isPending}
                     className="flex items-center gap-1 px-3 py-1 text-sm font-semibold rounded-lg text-white 
                              transition-all duration-300 ease-in-out
                              disabled:opacity-50 disabled:cursor-not-allowed
@@ -80,6 +79,6 @@ export default function BookingTable({ bookings, refetch }) {
           ))}
         </tbody>
       </table>
-    </div>
+    </section>
   );
 }

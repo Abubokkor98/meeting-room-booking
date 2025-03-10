@@ -52,32 +52,35 @@ export default function AdminRoomCard({ room, refetch }) {
   };
 
   return (
-    <div className="bg-white shadow-md hover:shadow-xl transition-shadow rounded-2xl p-5 w-full">
-      {/* image */}
-      <div className="relative w-full h-44">
+    <article className="bg-white shadow-md hover:shadow-xl transition-shadow rounded-2xl p-5 w-full">
+      {/* Room Image */}
+      <figure className="relative w-full h-44">
         <img
           src={photo}
           alt={name}
           className="rounded-xl w-full h-full object-cover"
         />
-      </div>
+      </figure>
 
-      {/* details */}
-      <div className="mt-4">
+      {/* Room Details */}
+      <section className="mt-4">
         <h2 className="text-xl font-semibold text-teal-600">{name}</h2>
         <p className="text-gray-700 text-sm mt-1">
           Price: <span className="font-medium">৳{pricePerHour} per hour</span>
         </p>
-      </div>
+      </section>
 
-      {/* action btns */}
+      {/* Action Buttons */}
       <div className="mt-5 flex gap-3">
+        {/* Update Button */}
         <button
           onClick={() => setShowModal(true)}
           className="flex-1 bg-teal-600 text-white px-4 py-2.5 rounded-lg font-medium transition hover:bg-teal-700"
         >
           Update
         </button>
+
+        {/* Delete Button */}
         <button
           onClick={() => modernDelete(_id)}
           className="flex-1 bg-red-600 text-white px-4 py-2.5 rounded-lg font-medium transition hover:bg-red-700"
@@ -86,7 +89,7 @@ export default function AdminRoomCard({ room, refetch }) {
         </button>
       </div>
 
-      {/* update modal component */}
+      {/* Update Modal Component */}
       {showModal && (
         <UpdateRoomModal
           room={room}
@@ -94,6 +97,6 @@ export default function AdminRoomCard({ room, refetch }) {
           refetch={refetch}
         />
       )}
-    </div>
+    </article>
   );
 }

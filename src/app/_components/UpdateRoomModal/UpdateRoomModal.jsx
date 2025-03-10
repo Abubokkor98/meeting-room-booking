@@ -32,7 +32,7 @@ const UpdateRoomModal = ({ room, onClose, refetch }) => {
     onSuccess: () => {
       toast.success("Room updated successfully!");
       onClose();
-      refetch(); // 🔄 Refresh data after update
+      refetch(); // refetch the rooms 
       router.push("/dashboard");
     },
     onError: () => {
