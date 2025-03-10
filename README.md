@@ -78,6 +78,7 @@ Use the following credentials to access the admin dashboard:
 ## 🎯 Features to Improve
 - Implement Stripe Payment for room bookings
 - Add Calendar View for room availability
+- Handle concurrent booking attempts
 - Improve Admin Dashboard UI
 - Integrate Email Notifications for bookings
 
