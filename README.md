@@ -1,36 +1,87 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🏢 Meeting Room Booking System
 
-## Getting Started
+A full-stack meeting room booking system that allows users to book, manage, and cancel room reservations, while admins can manage rooms and bookings efficiently.
 
-First, run the development server:
+## ✨ Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### ✅ Admin Features:
+- Fetch all bookings
+- Add a new room
+- Update a room
+- Delete a room
+- Manage rooms & bookings efficiently
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### ✅ User Features:
+- Fetch user-specific bookings
+- Allow users to book rooms
+- Cancel bookings
+- Favorite Room (Using Local Storage)
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## 🚀 Tech Stack
+**Frontend:** Next.js 14, React 18, Tailwind CSS  
+**Backend:** Node.js, Express.js, MongoDB  
+**State Management:** TanStack React Query  
+**Forms & Validation:** React Hook Form  
+**Notifications:** React Hot Toast  
+**API Requests:** Axios  
+**Authentication:** Clerk
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+---
 
-## Learn More
+## 🚀 Getting Started
 
-To learn more about Next.js, take a look at the following resources:
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/Abubokkor98/meeting-room-booking.git
+    ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. Navigate to the project directory:
+    ```bash
+    cd meeting-room-booking
+    ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+3. Install dependencies:
+    ```bash
+    npm install
+    ```
 
-## Deploy on Vercel
+4. Setup Environment Variables:
+    Create a `.env.local` file in the root directory with the following variables:
+    ```plaintext
+    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+    NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+    NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+    NEXT_PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL=/
+    NEXT_PUBLIC_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL=/
+    NEXT_PUBLIC_VITE_IMAGE_HOSTING_KEY=your_imgbb_api_key
+    NEXT_PUBLIC_API_BASE_URL=http://localhost:5000
+    ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+5. Run the Project:
+    ```bash
+    npm run dev
+    ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+6. Access the application at `http://localhost:3000`.
+
+---
+
+## 🎯 Features to Improve
+- Implement Stripe Payment for room bookings
+- Add Calendar View for room availability
+- Improve Admin Dashboard UI
+- Integrate Email Notifications for bookings
+
+## 🛠️ Additional Notes
+- Make sure MongoDB is running if using a local database
+- Clerk authentication must be set up correctly for user authentication
+- TanStack Query is used for real-time data updates without manually reloading pages
+
+---
+
+### **🙋‍♂️ About the Developer**
+
+Built with 💻 and passion by **Abu Bokkor Siddik**.
+
+- **GitHub**: [Abubokkor98](https://github.com/Abubokkor98)
+- **LinkedIn**: [Your LinkedIn Profile](https://www.linkedin.com/in/abubokkor)
