@@ -12,7 +12,6 @@ export default function RoomCard({ room }) {
       <div className="flex flex-col space-y-3">
         <h2 className="text-2xl font-semibold text-teal-600">{room.name}</h2>
         <p className="text-gray-600 text-base">Price: ৳{room.pricePerHour} per hour</p>
-        <p className="text-gray-500 text-sm">{room.description.slice(0, 100)}...</p>
         
         <div className="mt-4">
           <Link href={`/rooms/${room._id}`}>

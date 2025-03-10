@@ -28,6 +28,15 @@ A full-stack meeting room booking system that allows users to book, manage, and 
 
 ---
 
+### **🖥️ Admin Dashboard Credentials**
+
+Use the following credentials to access the admin dashboard:
+
+- **Email**: `himu3311@gmail.com`
+- **Password**: `meeting-room-admin`
+
+---
+
 ## 🚀 Getting Started
 
 1. Clone the repository:
@@ -54,7 +63,7 @@ A full-stack meeting room booking system that allows users to book, manage, and 
     NEXT_PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL=/
     NEXT_PUBLIC_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL=/
     NEXT_PUBLIC_VITE_IMAGE_HOSTING_KEY=your_imgbb_api_key
-    NEXT_PUBLIC_API_BASE_URL=http://localhost:5000
+    NEXT_PUBLIC_API_BASE_URL= your_backend_api_url
     ```
 
 5. Run the Project:
