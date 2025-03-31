@@ -12,7 +12,7 @@ export default function UserLayout({ children }) {
       <Sidebar />
 
       {/* Main Content */}
-      <div className="flex flex-col flex-grow p-4">
+      <div className="flex flex-wrap p-2 justify-center w-full md:flex-1">
         {children}
       </div>
     </div>
